@@ -22,6 +22,7 @@ function f:OnEvent(event, addon)
 		for _, model in pairs(WardrobeCollectionFrame.ItemsCollectionFrame.Models) do
 			model:HookScript("OnMouseDown", self.AddHideButton)
 		end
+		self:UnregisterEvent(event)
 	end
 end
 f:RegisterEvent("ADDON_LOADED")
@@ -40,11 +41,8 @@ function f:HideTransmog(model)
 	local visualID = model.visualInfo.visualID
 	local source = WardrobeCollectionFrame_GetSortedAppearanceSources(visualID)[1]
 	local name, link = GetItemInfo(source.itemID)
-	-- add to filter list
 	HideAppearanceDB[visualID] = name
-	-- update wardrobe window
 	WardrobeCollectionFrame.ItemsCollectionFrame:RefreshVisualsList()
 	WardrobeCollectionFrame.ItemsCollectionFrame:UpdateItems()
-	-- print message
 	print("Hiding "..link.." from the Appearances Tab")
 end
