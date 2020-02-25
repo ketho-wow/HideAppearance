@@ -1,0 +1,10 @@
+## Interface: 80300
+## Version: 1.0
+## Title: HideAppearance
+## Notes: Adds a dropdown button for hiding Wardrobe Appearances
+## Author: Ketho
+## SavedVariables: HideAppearanceDB
+## LoadOnDemand: 1
+## LoadWith: Blizzard_Collections
+
+HideAppearance.lua
