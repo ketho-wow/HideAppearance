@@ -1,6 +1,6 @@
 local Wardrobe, showHidden
-local GetCategoryAppearances = C_TransmogCollection.GetCategoryAppearances
 local f = CreateFrame("Frame")
+local GetCategoryAppearances = C_TransmogCollection.GetCategoryAppearances
 
 -- probably not the right way to do this and taints everything
 function C_TransmogCollection.GetCategoryAppearances(...)
