@@ -1,5 +1,5 @@
 ## Interface: 80300
-## Version: 1.0
+## Version: @project-version@
 ## Title: HideAppearance
 ## Notes: Adds a dropdown button for hiding Wardrobe Appearances
 ## Author: Ketho
