@@ -4,13 +4,15 @@ local GetCategoryAppearances = C_TransmogCollection.GetCategoryAppearances
 -- probably not the right way to do this and taints everything
 function C_TransmogCollection.GetCategoryAppearances(...)
 	local visualsList = GetCategoryAppearances(...)
-	if HideAppearanceDB and not showHidden then
+	if HideAppearanceDB then
 		-- iterate from end to beginning for tremove
 		for i = #visualsList, 1, -1 do
-			if HideAppearanceDB[visualsList[i].visualID] then
+			local isHidden = HideAppearanceDB[visualsList[i].visualID]
+			if (not showHidden and isHidden) or (showHidden and not isHidden) then
 				tremove(visualsList, i)
 			end
 		end
+
 	end
 	return visualsList
 end
@@ -35,26 +37,31 @@ function f.AddHideButton(model, button)
 			WardrobeModelRightClickDropDown.activeFrame = model
 			ToggleDropDownMenu(1, nil, WardrobeModelRightClickDropDown, model, -6, -3)
 		end
-		UIDropDownMenu_AddButton({notCheckable = true, disabled = true}) -- empty space
-		if not showHidden then -- only show Hide option when actively filtering
-			UIDropDownMenu_AddButton({notCheckable = true, text = HIDE, func = function() f:HideTransmog(model) end})
-		end
-		-- allow toggling hiding
-		local info = UIDropDownMenu_CreateInfo()
-		info.text = "Show hidden"
-		info.checked = function() return showHidden end
-		info.func = function() showHidden = not showHidden; f:UpdateWardrobe() end
-		UIDropDownMenu_AddButton(info)
+		UIDropDownMenu_AddButton({ -- empty space
+			notCheckable = true,
+			disabled = true,
+		})
+		local isHidden = HideAppearanceDB[model.visualInfo.visualID]
+		UIDropDownMenu_AddButton({
+			notCheckable = true,
+			text = isHidden and SHOW or HIDE,
+			func = function() f:ToggleTransmog(model, isHidden) end,
+		})
+		UIDropDownMenu_AddButton({ -- allow showing all
+			text = "Show hidden",
+			checked = function() return showHidden end,
+			func = function() showHidden = not showHidden; f:UpdateWardrobe() end,
+		})
 	end
 end
 
-function f:HideTransmog(model)
+function f:ToggleTransmog(model, isHidden)
 	local visualID = model.visualInfo.visualID
 	local source = WardrobeCollectionFrame_GetSortedAppearanceSources(visualID)[1]
 	local name, link = GetItemInfo(source.itemID)
-	HideAppearanceDB[visualID] = name
+	HideAppearanceDB[visualID] = not isHidden and name
 	self:UpdateWardrobe()
-	print("Hiding "..link.." from the Appearances Tab")
+	print(format("%s "..link.." from the Appearances Tab", isHidden and "Unhiding" or "Hiding"))
 end
 
 function f:UpdateWardrobe()
