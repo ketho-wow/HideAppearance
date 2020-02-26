@@ -1,5 +1,6 @@
-local showHidden
+local Wardrobe, showHidden
 local GetCategoryAppearances = C_TransmogCollection.GetCategoryAppearances
+local f = CreateFrame("Frame")
 
 -- probably not the right way to do this and taints everything
 function C_TransmogCollection.GetCategoryAppearances(...)
@@ -17,14 +18,22 @@ function C_TransmogCollection.GetCategoryAppearances(...)
 	return visualsList
 end
 
-local f = CreateFrame("Frame")
-
 function f:OnEvent(event, addon)
 	if addon == "HideAppearance" then
 		HideAppearanceDB = HideAppearanceDB or {}
-		for _, model in pairs(WardrobeCollectionFrame.ItemsCollectionFrame.Models) do
+		Wardrobe = WardrobeCollectionFrame.ItemsCollectionFrame
+		-- hook all models
+		for _, model in pairs(Wardrobe.Models) do
 			model:HookScript("OnMouseDown", self.AddHideButton)
 		end
+		-- toggle for showing only hidden Appearances
+		local cb = CreateFrame("CheckButton", nil, Wardrobe, "UICheckButtonTemplate")
+		cb:SetPoint("TOPLEFT", Wardrobe.WeaponDropDown, "BOTTOMLEFT", 14, 5)
+		cb.text:SetText("Show hidden")
+		cb:SetScript("OnClick", function(btn)
+			showHidden = btn:GetChecked()
+			f:UpdateWardrobe()
+		end)
 		self:UnregisterEvent(event)
 	end
 end
@@ -47,11 +56,6 @@ function f.AddHideButton(model, button)
 			text = isHidden and SHOW or HIDE,
 			func = function() f:ToggleTransmog(model, isHidden) end,
 		})
-		UIDropDownMenu_AddButton({ -- allow showing all
-			text = "Show hidden",
-			checked = function() return showHidden end,
-			func = function() showHidden = not showHidden; f:UpdateWardrobe() end,
-		})
 	end
 end
 
@@ -65,6 +69,6 @@ function f:ToggleTransmog(model, isHidden)
 end
 
 function f:UpdateWardrobe()
-	WardrobeCollectionFrame.ItemsCollectionFrame:RefreshVisualsList()
-	WardrobeCollectionFrame.ItemsCollectionFrame:UpdateItems()
+	Wardrobe:RefreshVisualsList()
+	Wardrobe:UpdateItems()
 end
