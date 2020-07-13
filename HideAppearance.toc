@@ -7,4 +7,5 @@
 ## LoadOnDemand: 1
 ## LoadWith: Blizzard_Collections
 
+UIDropDownMenu.lua
 HideAppearance.lua

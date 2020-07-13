@@ -46,10 +46,7 @@ function f.AddHideButton(model, button)
 			WardrobeModelRightClickDropDown.activeFrame = model
 			ToggleDropDownMenu(1, nil, WardrobeModelRightClickDropDown, model, -6, -3)
 		end
-		UIDropDownMenu_AddButton({ -- empty space
-			notCheckable = true,
-			disabled = true,
-		})
+		UIDropDownMenu_AddSeparator()
 		local isHidden = HideAppearanceDB[model.visualInfo.visualID]
 		UIDropDownMenu_AddButton({
 			notCheckable = true,
