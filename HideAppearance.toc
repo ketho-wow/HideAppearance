@@ -6,6 +6,8 @@
 ## SavedVariables: HideAppearanceDB
 ## LoadOnDemand: 1
 ## LoadWith: Blizzard_Collections
+## X-Curse-Project-ID: 399308
+## X-WoWI-ID: 25636
 
 UIDropDownMenu.lua
 HideAppearance.lua

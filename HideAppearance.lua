@@ -6,7 +6,6 @@ local GetCategoryAppearances = C_TransmogCollection.GetCategoryAppearances
 function C_TransmogCollection.GetCategoryAppearances(...)
 	local visualsList = GetCategoryAppearances(...)
 	if HideAppearanceDB then
-		-- iterate from end to beginning for tremove
 		for i = #visualsList, 1, -1 do
 			local isHidden = HideAppearanceDB[visualsList[i].visualID]
 			if (not showHidden and isHidden) or (showHidden and not isHidden) then
