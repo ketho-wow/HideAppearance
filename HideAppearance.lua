@@ -2,6 +2,13 @@ local Wardrobe, showHidden
 local f = CreateFrame("Frame")
 local GetCategoryAppearances = C_TransmogCollection.GetCategoryAppearances
 
+-- its confusing to check if a (LoadOnDemand) addon is/will be enabled
+local function IsAddonEnabled(addon)
+	local _, title = GetAddOnInfo(addon)
+	local state = GetAddOnEnableState(nil, addon)
+	return title and state > 0
+end
+
 -- probably not the right way to do this and taints everything
 function C_TransmogCollection.GetCategoryAppearances(...)
 	local visualsList = GetCategoryAppearances(...)
@@ -27,7 +34,11 @@ function f:OnEvent(event, addon)
 		end
 		-- toggle for showing only hidden Appearances
 		local cb = CreateFrame("CheckButton", nil, Wardrobe, "UICheckButtonTemplate")
-		cb:SetPoint("TOPLEFT", Wardrobe.WeaponDropDown, "BOTTOMLEFT", 14, 5)
+		if IsAddonEnabled("WardrobeSort") or IsAddonEnabled("LegionWardrobe") then
+			cb:SetPoint("TOPRIGHT", Wardrobe.WeaponDropDown, "BOTTOMLEFT", -64, 5)
+		else
+			cb:SetPoint("TOPLEFT", Wardrobe.WeaponDropDown, "BOTTOMLEFT", 14, 5)
+		end
 		cb.text:SetText("Show hidden")
 		cb:SetScript("OnClick", function(btn)
 			showHidden = btn:GetChecked()

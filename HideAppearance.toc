@@ -1,4 +1,4 @@
-## Interface: 80300
+## Interface: 90002
 ## Version: @project-version@
 ## Title: HideAppearance
 ## Notes: Lets you hide Wardrobe Appearances
@@ -9,5 +9,5 @@
 ## X-Curse-Project-ID: 399308
 ## X-WoWI-ID: 25636
 
-UIDropDownMenu.lua
+TaintLess.xml
 HideAppearance.lua
