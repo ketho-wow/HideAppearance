@@ -5,7 +5,7 @@ local GetCategoryAppearances = C_TransmogCollection.GetCategoryAppearances
 -- probably not the right way to do this and taints everything
 function C_TransmogCollection.GetCategoryAppearances(...)
 	local visualsList = GetCategoryAppearances(...)
-	if HideAppearanceDB then
+	if visualsList and HideAppearanceDB then
 		for i = #visualsList, 1, -1 do
 			local isHidden = HideAppearanceDB[visualsList[i].visualID]
 			if (not showHidden and isHidden) or (showHidden and not isHidden) then
