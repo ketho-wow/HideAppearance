@@ -9,6 +9,17 @@ local function IsAddonEnabled(addon)
 	return title and state > 0
 end
 
+local function PositionButton(cb, isAtTransmogrifier)
+	cb:ClearAllPoints()
+	if isAtTransmogrifier then
+		cb:SetPoint("BOTTOMLEFT", Wardrobe.ModelR1C1, "TOPLEFT", -7, 10)
+	elseif IsAddonEnabled("WardrobeSort") or IsAddonEnabled("LegionWardrobe") then
+		cb:SetPoint("TOPRIGHT", Wardrobe.WeaponDropDown, "BOTTOMLEFT", -64, 5)
+	else
+		cb:SetPoint("TOPLEFT", Wardrobe.WeaponDropDown, "BOTTOMLEFT", 14, 5)
+	end
+end
+
 -- probably not the right way to do this and taints everything
 function C_TransmogCollection.GetCategoryAppearances(...)
 	local visualsList = GetCategoryAppearances(...)
@@ -34,11 +45,14 @@ function f:OnEvent(event, addon)
 		end
 		-- toggle for showing only hidden Appearances
 		local cb = CreateFrame("CheckButton", nil, Wardrobe, "UICheckButtonTemplate")
-		if IsAddonEnabled("WardrobeSort") or IsAddonEnabled("LegionWardrobe") then
-			cb:SetPoint("TOPRIGHT", Wardrobe.WeaponDropDown, "BOTTOMLEFT", -64, 5)
-		else
-			cb:SetPoint("TOPLEFT", Wardrobe.WeaponDropDown, "BOTTOMLEFT", 14, 5)
-		end
+		hooksecurefunc("ShowUIPanel", function(panel)
+			if panel == CollectionsJournal then
+				PositionButton(cb)
+			elseif panel == WardrobeFrame then
+				PositionButton(cb, true)
+			end
+		end)
+		-- PositionButton(cb)
 		cb.text:SetText("Show hidden")
 		cb:SetScript("OnClick", function(btn)
 			showHidden = btn:GetChecked()
@@ -47,6 +61,7 @@ function f:OnEvent(event, addon)
 		self:UnregisterEvent(event)
 	end
 end
+
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", f.OnEvent)
 
