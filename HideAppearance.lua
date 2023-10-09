@@ -1,3 +1,5 @@
+local ADDON_NAME, namespace = ...
+local L = namespace.L
 local Wardrobe, showHidden
 local f = CreateFrame("Frame")
 local GetCategoryAppearances = C_TransmogCollection.GetCategoryAppearances
@@ -53,7 +55,7 @@ function f:OnEvent(event, addon)
 			end
 		end)
 		-- PositionButton(cb)	
-		cb.text:SetText("Show hidden")
+		cb.text:SetText(L["ShowHidden"])
 		cb:SetScript("OnClick", function(btn)
 			showHidden = btn:GetChecked()
 			f:UpdateWardrobe()
