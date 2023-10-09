@@ -52,7 +52,7 @@ function f:OnEvent(event, addon)
 				PositionButton(cb, true)
 			end
 		end)
-		-- PositionButton(cb)
+		-- PositionButton(cb)	
 		cb.text:SetText("Show hidden")
 		cb:SetScript("OnClick", function(btn)
 			showHidden = btn:GetChecked()
@@ -83,7 +83,7 @@ end
 
 function f:ToggleTransmog(model, isHidden)
 	local visualID = model.visualInfo.visualID
-	local source = WardrobeCollectionFrame_GetSortedAppearanceSources(visualID)[1]
+	local source = CollectionWardrobeUtil.GetSortedAppearanceSources(visualID)[1]
 	local name, link = GetItemInfo(source.itemID)
 	HideAppearanceDB[visualID] = not isHidden and name
 	self:UpdateWardrobe()
