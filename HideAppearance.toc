@@ -10,4 +10,5 @@
 ## X-WoWI-ID: 25636
 
 TaintLess.xml
+Localization.lua
 HideAppearance.lua

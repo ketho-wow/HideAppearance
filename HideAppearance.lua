@@ -1,3 +1,5 @@
+local ADDON_NAME, namespace = ...
+local L = namespace.L
 local Wardrobe, showHidden
 local f = CreateFrame("Frame")
 local GetCategoryAppearances = C_TransmogCollection.GetCategoryAppearances
@@ -52,8 +54,8 @@ function f:OnEvent(event, addon)
 				PositionButton(cb, true)
 			end
 		end)
-		-- PositionButton(cb)
-		cb.text:SetText("Show hidden")
+		-- PositionButton(cb)	
+		cb.text:SetText(L["ShowHidden"])
 		cb:SetScript("OnClick", function(btn)
 			showHidden = btn:GetChecked()
 			f:UpdateWardrobe()
@@ -83,7 +85,7 @@ end
 
 function f:ToggleTransmog(model, isHidden)
 	local visualID = model.visualInfo.visualID
-	local source = WardrobeCollectionFrame_GetSortedAppearanceSources(visualID)[1]
+	local source = CollectionWardrobeUtil.GetSortedAppearanceSources(visualID)[1]
 	local name, link = GetItemInfo(source.itemID)
 	HideAppearanceDB[visualID] = not isHidden and name
 	self:UpdateWardrobe()
