@@ -1,4 +1,4 @@
-## Interface: 90002
+## Interface: 100107
 ## Version: @project-version@
 ## Title: HideAppearance
 ## Notes: Lets you hide Wardrobe Appearances

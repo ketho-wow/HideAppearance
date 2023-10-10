@@ -54,7 +54,6 @@ function f:OnEvent(event, addon)
 				PositionButton(cb, true)
 			end
 		end)
-		-- PositionButton(cb)	
 		cb.text:SetText(L["ShowHidden"])
 		cb:SetScript("OnClick", function(btn)
 			showHidden = btn:GetChecked()
